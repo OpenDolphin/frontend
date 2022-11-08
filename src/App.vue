@@ -4,12 +4,11 @@ import { reactive, toRefs } from 'vue';
 import ProfilePicture from './components/ProfilePicture.vue';
 import { Opportunity, type HomeFilled } from '@element-plus/icons-vue';
 const state = reactive({
-  fits: ['fill', 'contain', 'cover'],
-  imageUrl: 'placeholders/avatar-1.png',
+  imageUrl: 'placeholders/avatar-1.jpg',
   name: 'Pierre',
 });
 
-const { fits, imageUrl, name } = toRefs(state);
+const { imageUrl, name } = toRefs(state);
 </script>
 
 <template>

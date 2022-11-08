@@ -8,6 +8,8 @@
   --vt-c-black-soft: #222222;
   --vt-c-black-mute: #282828;
 
+  --vt-c-fullblack: #000;
+
   --vt-c-indigo: #2c3e50;
 
   --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
@@ -44,8 +46,13 @@
   --color-post-background: #fff;
 
   --color-like: #C62828;
+  --color-like-background: #ffcdcd;
   --color-comment: #2976be;
+  --color-comment-background: #d2e8ff;
   --color-boost: #11bb11;
+  --color-boost-background: #caffca;
+
+  --color-verified: #925fe9;
 
 
 
@@ -80,6 +87,17 @@
     --color-topbar-element: #DDD;
     --color-topbar-element-active: #FFF;
     --color-topbar-profile: #8f8f8f;
+
+    --color-post-background: #222;
+
+    --color-like: #C62828;
+    --color-like-background: #381717;
+    --color-comment: #2976be;
+    --color-comment-background: #0a1e33;
+    --color-boost: #11bb11;
+    --color-boost-background: #0c290c;
+
+    --color-text-soft: #6f6f6f;
   }
 }
 

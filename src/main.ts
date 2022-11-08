@@ -9,7 +9,7 @@ import ElementPlus from 'element-plus';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-const app = createApp(App)
+const app = createApp(App);
 
 app.use(createPinia())
 app.use(router)

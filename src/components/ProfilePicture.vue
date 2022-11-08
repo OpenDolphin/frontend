@@ -2,7 +2,7 @@
 defineProps({
     fit: {
         type: String,
-        default: 'contain',
+        default: 'cover',
     },
 
     size: {
@@ -35,7 +35,7 @@ function getShadow(color: string): string | undefined {
         return undefined;
     }
 
-    return '0px 0px 6px 3px ' + color;
+    return '0px 0px 3px 3px ' + color;
 }
 
 </script>
