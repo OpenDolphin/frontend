@@ -2,6 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import { reactive, toRefs } from 'vue';
 import ProfilePicture from './components/ProfilePicture.vue';
+import { Opportunity, type HomeFilled } from '@element-plus/icons-vue';
 const state = reactive({
   fits: ['fill', 'contain', 'cover'],
   imageUrl: 'placeholders/avatar-1.png',
@@ -19,15 +20,38 @@ const { fits, imageUrl, name } = toRefs(state);
       </div>
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/trending">Trending</RouterLink>
-        <RouterLink to="/events">Events</RouterLink>
-        <RouterLink to="/communities">Communities</RouterLink>
+        <RouterLink to="/">
+          <el-icon size="25" class="navbar-icon">
+            <HomeFilled />
+          </el-icon>
+        </RouterLink>
+        <RouterLink to="/trending">
+          <el-icon size="25" class="navbar-icon">
+            <TrendCharts />
+          </el-icon>
+        </RouterLink>
+        <RouterLink to="/events">
+          <el-icon size="25" class="navbar-icon">
+            <Calendar />
+          </el-icon>
+        </RouterLink>
+        <RouterLink to="/communities">
+          <el-icon size="25" class="navbar-icon">
+            <Opportunity />
+          </el-icon>
+        </RouterLink>
       </nav>
     </div>
     <div class="topbar--right">
       <div class="profile-section">
         <div class="profile-actions">
+
+          <div class="search">
+            <el-icon size="25">
+              <Search />
+            </el-icon>
+          </div>
+
           <div class="notifications">
             <el-badge :value="4" :max="10">
               <el-icon size="25">
@@ -54,7 +78,9 @@ const { fits, imageUrl, name } = toRefs(state);
     </div>
   </header>
 
-  <RouterView />
+  <div class="router-view-container">
+    <RouterView />
+  </div>
 </template>
 
 <style lang="scss">
@@ -117,19 +143,15 @@ header {
 
     div.profile-actions {
       display: flex;
-      column-gap: 40px;
+      column-gap: 20px;
       height: 25px;
       margin-left: 20px;
       margin-right: 20px;
     }
-
-    div.notifications {
+    
+    div.search, div.notifications, div.messages {
       cursor: pointer;
       height: 25px;
-    }
-
-    div.messages {
-      cursor: pointer;
     }
   }
 
@@ -165,9 +187,22 @@ header {
       font-weight: 600;
       color: var(--color-topbar-element);
       text-decoration: none;
+
+      &.router-link-active {
+        color: var(--color-topbar-element-active);
+        border-bottom: 1px solid var(--color-topbar-element-active);
+      }
+    }
+    
+    .navbar-icon {
+      height: $contentHeight;
     }
   }
 
 
+}
+
+div.router-view-container {
+  margin: 20px;
 }
 </style>

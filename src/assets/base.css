@@ -35,13 +35,21 @@
 
   --color-interaction: #552fdf;
   --color-topbar-element: #222;
+  --color-topbar-element-active: #444;
   --color-topbar-profile: #777;
 
   --color-background-topbar: #f8f8f8de;
+  
+  --color-white-soft: #eef0f4;
+  --color-post-background: #fff;
+
+  --color-like: #C62828;
+  --color-comment: #2976be;
+  --color-boost: #11bb11;
 
 
 
-  --color-background: var(--vt-c-white);
+  --color-background: var(--color-white-soft);
   --color-background-soft: var(--vt-c-white-soft);
   --color-background-mute: var(--vt-c-white-mute);
 
@@ -69,7 +77,8 @@
     --color-text: var(--vt-c-text-dark-2);
 
     --color-background-topbar: #222222DE;
-    --color-topbar-element: #EEE;
+    --color-topbar-element: #DDD;
+    --color-topbar-element-active: #FFF;
     --color-topbar-profile: #8f8f8f;
   }
 }

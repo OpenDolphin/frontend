@@ -18,11 +18,25 @@ defineProps({
         }
     },
 
+    highlightColor: {
+        type: String,
+        required: false,
+        default: null,
+    },
+
     src: {
         type: String,
         required: true,
     }
 })
+
+function getShadow(color: string): string | undefined {
+    if(color == null) {
+        return undefined;
+    }
+
+    return '0px 0px 6px 3px ' + color;
+}
 
 </script>
 
@@ -35,7 +49,8 @@ defineProps({
             :style="{
                 width: size + 'px', 
                 height: size + 'px',
-                borderRadius: shape == 'circle' ? size + 'px' : '5px'   
+                borderRadius: shape == 'circle' ? size + 'px' : '5px',
+                boxShadow: getShadow(highlightColor),  
             }"    
         />
     </div>
