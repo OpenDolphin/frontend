@@ -5,6 +5,7 @@ import { faHeart, faComments } from '@fortawesome/free-regular-svg-icons';
 import { faRetweet } from '@fortawesome/free-solid-svg-icons';
 import { DateTime } from 'luxon';
 import { Post } from '@/types/post';
+import router from '@/router';
 
 defineProps({
     post: {
@@ -20,6 +21,12 @@ function renderPostDate(date: Date): string {
     }
 
     return DateTime.fromJSDate(date).toLocaleString(DateTime.DATETIME_MED);
+}
+
+function viewProfile(username: string) {
+    return ()=>{
+        router.push(`/profile/${username}`)
+    }
 }
 
 function formatNumber(n: number): string {
@@ -43,11 +50,13 @@ function formatNumber(n: number): string {
                         :size="48"
                         shape="circle"
                         fit="cover"
+                        class="author-profile-picture"
                         :src="post.profilePicture"
                         :highlightColor="post.color"
+                        :onClick="viewProfile(post.username)"
                     />
 
-                    <div class="author-info">
+                    <div class="author-info" :onClick="viewProfile(post.username)">
                         <div class="name-surname-verified">
                             <div class="name-surname">
                                 {{ post.displayName }}
@@ -119,12 +128,14 @@ function formatNumber(n: number): string {
                         :size="50"
                         :src="reply.profilePicture"
                         :highlightColor="reply.color"
+                        :onClick="viewProfile(reply.username)"
+                        class="author-profile-picture"
                         shape="circle"
                     />
                 </div>
 
                 <div class="post-reply-content">
-                    <div class="user-info">
+                    <div class="user-info" :onClick="viewProfile(reply.username)">
                         <div class="user-info--display-name">
                             {{ reply.displayName }}
                         </div>
@@ -184,6 +195,10 @@ function formatNumber(n: number): string {
 
 $postBorderRadius: 10px;
 $postPadding: 20px;
+
+.author-profile-picture {
+    cursor: pointer;
+}
 
 div.post-actions {
     display: flex;
@@ -285,6 +300,7 @@ div.post {
             flex-direction: column;
             justify-content: center;
             row-gap: 0px;
+            cursor: pointer;
 
             div.name-surname-verified {
                 display: flex;
@@ -363,6 +379,7 @@ div.post-replies {
 
         div.user-info {
             display: flex;
+            cursor: pointer;
             font-size: 14px;
             margin-bottom: 4px;
             color: var(--color-text-soft);

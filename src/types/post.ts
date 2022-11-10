@@ -1,11 +1,11 @@
 type Reply = {
-    displayName: String,
-    username: String,
+    displayName: string,
+    username: string,
     verified: boolean,
-    profilePicture: String,
-    message: String,
+    profilePicture: string,
+    message: string,
     time: Date,
-    color: String,
+    color: string,
 
     likes: number;
     comments: number;
