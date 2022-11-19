@@ -36,6 +36,9 @@
   --color-500: #d2a6fa;
 
   --color-interaction: #552fdf;
+  --color-interaction-hover: #6645df;
+  --color-interaction-active: #4a21df;
+
   --color-topbar-element: #222;
   --color-topbar-element-active: #444;
   --color-topbar-profile: #777;
@@ -115,7 +118,7 @@ body {
   color: var(--color-text);
   background: var(--color-background);
   line-height: 1.6;
-  font-family: 'Open Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Open Sans', 'Open Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   font-size: 15px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

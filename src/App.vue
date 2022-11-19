@@ -4,7 +4,7 @@ import { reactive, toRefs } from 'vue';
 import ProfilePicture from './components/ProfilePicture.vue';
 import { Opportunity, type HomeFilled } from '@element-plus/icons-vue';
 const state = reactive({
-  imageUrl: 'placeholders/avatar-1.jpg',
+  imageUrl: '/placeholders/avatar-1.jpg',
   name: 'Pierre',
 });
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { UserProfile } from '@/types/profile';
+import ButtonVue from '@/components/Button.vue';
 import { useRoute } from 'vue-router';
 const route = useRoute();
 
@@ -25,14 +25,22 @@ const bannerPic = 'https://images.unsplash.com/photo-1570201731886-7f21202470b7?
       </div>
 
       <div class="banner-bottom">
-        <div class="profile-picture">
-          <ProfilePicture
-              :size="150"
-              :src="user.profilePicture"
-              :highlightColor="user.color"
-              class="author-profile-picture"
-              shape="circle"
-          />
+        <div class="profile-picture-action-buttons">
+          <div class="profile-picture">
+            <ProfilePicture
+                :size="150"
+                :src="user.profilePicture"
+                :highlightColor="user.color"
+                class="author-profile-picture"
+                shape="circle"
+            />
+          </div>
+
+          <div class="action-buttons">
+            <ButtonVue>
+              Follow
+            </ButtonVue>
+          </div>
         </div>
 
         <div class="user-info">
@@ -61,9 +69,15 @@ main {
   margin-left: auto;
   margin-right: auto;
 }
+
+$radius: 10px;
+
 div.user-profile {
+  background-color: var(--color-post-background);
+  border-radius: $radius;
+  padding-bottom: 20px;
   div.top-banner {
-    border-radius: 5px;
+    border-radius: $radius;
     height: 250px;
     overflow: hidden;
 
@@ -79,10 +93,22 @@ div.user-profile {
     margin-right: 20px;
   }
 
-  div.profile-picture {
+  div.profile-picture-action-buttons {
     $height: 150px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
     height: $height;
     margin-top: - calc($height / 2); 
+    div.profile-picture {
+      height: $height;
+    }
+
+    div.action-buttons {
+      display: flex;
+      padding-top: 15px;
+      height: calc($height / 2);
+    }
   }
 
   div.user-info {
@@ -107,6 +133,10 @@ div.user-profile {
       font-weight: bold;
       margin-top: 5px;
 
+      div.real-display-name {
+        font-weight: 600;
+      }
+
       div.verified-badge {
         display: flex;
         align-items: center;
@@ -117,6 +147,7 @@ div.user-profile {
 
     div.username {
       font-size: 16px;
+      font-weight: 600;
       color: var(--color-text-soft);
     }
   }

@@ -9,6 +9,8 @@ import ElementPlus from 'element-plus';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+import "@fontsource/open-sans/variable.css"
+
 const app = createApp(App);
 
 app.use(createPinia())

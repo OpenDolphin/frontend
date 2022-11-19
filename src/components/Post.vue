@@ -309,8 +309,8 @@ div.post {
                 justify-items: center;
 
                 div.name-surname {
-                    font-size: 18px;
-                    font-weight: bold;
+                    font-size: 16px;
+                    font-weight: 600;
                     line-height: 25px;
                 }
 
@@ -382,7 +382,7 @@ div.post-replies {
             cursor: pointer;
             font-size: 14px;
             margin-bottom: 4px;
-            color: var(--color-text-soft);
+            color: var(--color-text);
             align-items: center;
             flex-direction: row;
             column-gap: 8px;
@@ -391,6 +391,10 @@ div.post-replies {
 
             div.user-info--display-name {
                 font-weight: bold;
+            }
+
+            div.user-info--username {
+                color: var(--color-text-soft);
             }
 
             div.user-info--verified-badge {
