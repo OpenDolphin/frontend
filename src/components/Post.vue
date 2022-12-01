@@ -7,6 +7,8 @@ import { DateTime } from 'luxon';
 import { Post } from '@/types/post';
 import router from '@/router';
 
+const config = window._config;
+
 defineProps({
     post: {
         type: Post,
@@ -51,7 +53,7 @@ function formatNumber(n: number): string {
                         shape="circle"
                         fit="cover"
                         class="author-profile-picture"
-                        :src="post.profilePicture"
+                        :src="`${config.backendUrl}/api/v1/users/@${post.username}/profile_picture`"
                         :highlightColor="post.color"
                         :onClick="viewProfile(post.username)"
                     />
@@ -126,7 +128,7 @@ function formatNumber(n: number): string {
                 <div class="post-reply-left">
                     <ProfilePicture
                         :size="50"
-                        :src="reply.profilePicture"
+                        :src="`${config.backendUrl}/api/v1/users/@${reply.username}/profile_picture`"
                         :highlightColor="reply.color"
                         :onClick="viewProfile(reply.username)"
                         class="author-profile-picture"

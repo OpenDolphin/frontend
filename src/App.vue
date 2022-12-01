@@ -15,7 +15,7 @@ const { imageUrl, name } = toRefs(state);
   <header>
     <div class="topbar--left">
       <div class="logo">
-
+        <img src="/symbol.svg" class="logo"/>
       </div>
 
       <nav>
@@ -167,10 +167,14 @@ header {
   }
 
   div.logo {
-    width: 120px;
+    width: 80px;
     height: $contentHeight;
-    background-color: var(--color-100);
-    border-radius: 5px;
+
+    img.logo {
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
+    }
   }
 
   nav {

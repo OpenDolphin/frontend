@@ -1,22 +1,46 @@
 <script setup lang="ts">
 import ButtonVue from '@/components/Button.vue';
+import { CircleCheckFilled } from '@element-plus/icons-vue';
+import { ElIcon } from 'element-plus';
+import { onMounted, ref, type Ref } from 'vue';
 import { useRoute } from 'vue-router';
+
+const config = window._config;
 const route = useRoute();
+let username = route.params.username;
 
-const username = route.params.username;
-const user = {
-  profilePicture: 'https://images.unsplash.com/photo-1619895862022-09114b41f16f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-  color: '#F00',
-  verified: true,
-}
+interface User {
+  id: number;
+  createdAt: string;
+  username: string;
+  displayName: string;
+};
 
+
+const user: Ref<User | null> = ref(null);
 const bannerPic = 'https://images.unsplash.com/photo-1570201731886-7f21202470b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1504&q=8';
+
+onMounted(async ()=>{
+  let req = new Request(`${config.backendUrl}/api/v1/users/@${username}`);
+  try {
+    let res = await fetch(req);
+    if(res.status != 200) {
+      console.error(`Invalid status code received: ${res.status}`);
+      console.error(`Body = ${res.body}`)
+      return
+    }
+
+    user.value = await res.json() as User;
+  } catch(e) {
+    console.error(`Unable to fetch profile @${username}`, e);
+  }
+});
 
 </script>
 
 <template>
   <main>
-    <div class="user-profile">
+    <div class="user-profile" v-if="user != null">
       <div class="top-banner">
         <img 
           :src="bannerPic"
@@ -29,7 +53,7 @@ const bannerPic = 'https://images.unsplash.com/photo-1570201731886-7f21202470b7?
           <div class="profile-picture">
             <ProfilePicture
                 :size="150"
-                :src="user.profilePicture"
+                :src="`${config.backendUrl}/api/v1/users/@${user.username}/profile_picture`"
                 :highlightColor="user.color"
                 class="author-profile-picture"
                 shape="circle"
@@ -45,7 +69,7 @@ const bannerPic = 'https://images.unsplash.com/photo-1570201731886-7f21202470b7?
 
         <div class="user-info">
           <div class="display-name">
-            <div class="real-display-name">John Doe</div>
+            <div class="real-display-name">{{ user.displayName }}</div>
             <div class="verified-badge" v-if="user.verified">
                 <el-icon><CircleCheckFilled /></el-icon>
             </div>
@@ -114,7 +138,7 @@ div.user-profile {
   div.user-info {
     display: flex;
     flex-direction: column;
-    width: 150px;
+    width: 250px;
     margin-top: 15px;
     row-gap: 8px;
 
