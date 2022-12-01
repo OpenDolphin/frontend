@@ -14,6 +14,7 @@ interface User {
   createdAt: string;
   username: string;
   displayName: string;
+  biography: string;
   verified: boolean;
 };
 
@@ -81,7 +82,7 @@ onMounted(async ()=>{
         </div>
 
         <div class="biography">
-          Suspendisse viverra venenatis imperdiet. Donec accumsan erat lacus, vel auctor turpis volutpat id. Phasellus in malesuada enim. Donec nec risus purus. 
+          {{ user.biography }}
         </div>
       </div>
     </div>
