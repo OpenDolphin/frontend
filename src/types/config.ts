@@ -1,3 +1,3 @@
-type Config = {
+export type Config = {
   backendUrl: string;
 }

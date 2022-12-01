@@ -14,6 +14,7 @@ interface User {
   createdAt: string;
   username: string;
   displayName: string;
+  verified: boolean;
 };
 
 
@@ -51,10 +52,10 @@ onMounted(async ()=>{
       <div class="banner-bottom">
         <div class="profile-picture-action-buttons">
           <div class="profile-picture">
+            <!-- TODO: Add highlightColor -->
             <ProfilePicture
                 :size="150"
                 :src="`${config.backendUrl}/api/v1/users/@${user.username}/profile_picture`"
-                :highlightColor="user.color"
                 class="author-profile-picture"
                 shape="circle"
             />
