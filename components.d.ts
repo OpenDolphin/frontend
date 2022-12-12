@@ -16,6 +16,7 @@ declare module '@vue/runtime-core' {
     IconSupport: typeof import('./src/components/icons/IconSupport.vue')['default']
     IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
     Post: typeof import('./src/components/Post.vue')['default']
+    PostReply: typeof import('./src/components/PostReply.vue')['default']
     ProfilePicture: typeof import('./src/components/ProfilePicture.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

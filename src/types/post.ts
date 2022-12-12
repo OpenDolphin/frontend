@@ -27,10 +27,15 @@ type PostResponse = {
 type Post = {
     id: string;
     content: string;
+    
+    // Counters
     likes: number;
+    comments: number;
+    boosts: number;
+
     author: number;
     replies?: Array<Post>;
-    createdAt: Date;
+    createdAt: string;
 }
 
 export type { PostResponse, User, Post };
