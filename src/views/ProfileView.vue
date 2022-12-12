@@ -184,4 +184,10 @@ div.user-profile {
       margin-top: 10px;
     }
 }
+
+@media screen and (max-width: 800px){
+  main {
+    width: 80vw;
+  }
+}
 </style>

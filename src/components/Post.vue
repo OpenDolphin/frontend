@@ -4,25 +4,23 @@ import type ProfilePicture from './ProfilePicture.vue';
 import { faHeart, faComments } from '@fortawesome/free-regular-svg-icons';
 import { faRetweet } from '@fortawesome/free-solid-svg-icons';
 import { DateTime } from 'luxon';
-import { Post } from '@/types/post';
+import type { Post, User } from '@/types/post';
 import router from '@/router';
 
+
 const config = window._config;
+defineProps<{
+    post: Post
+    author: User
+}>()
 
-defineProps({
-    post: {
-        type: Post,
-        required: true,
-    }
-})
-
-function renderPostDate(date: Date): string {
-    let relativeTime = DateTime.fromJSDate(date).toRelative();
+function renderPostDate(date: string): string {
+    let relativeTime = DateTime.fromISO(date).toRelative();
     if(relativeTime != null) {
         return relativeTime;
     }
 
-    return DateTime.fromJSDate(date).toLocaleString(DateTime.DATETIME_MED);
+    return DateTime.fromISO(date).toLocaleString(DateTime.DATETIME_MED);
 }
 
 function viewProfile(username: string) {
@@ -53,23 +51,22 @@ function formatNumber(n: number): string {
                         shape="circle"
                         fit="cover"
                         class="author-profile-picture"
-                        :src="`${config.backendUrl}/api/v1/users/@${post.username}/profile_picture`"
-                        :highlightColor="post.color"
-                        :onClick="viewProfile(post.username)"
+                        :src="`${config.backendUrl}/api/v1/users/@${author.username}/profile_picture`"
+                        :onClick="viewProfile(author.username)"
                     />
 
-                    <div class="author-info" :onClick="viewProfile(post.username)">
+                    <div class="author-info" :onClick="viewProfile(author.username)">
                         <div class="name-surname-verified">
                             <div class="name-surname">
-                                {{ post.displayName }}
+                                {{ author.displayName }}
                             </div>
                             <el-icon 
                                 class="verified-badge"
-                                v-if="post.verified">
+                                v-if="author.verified">
                                 <CircleCheckFilled />
                             </el-icon>
                         </div>
-                        <p class="username">@{{ post.username }}</p>
+                        <p class="username">@{{ author.username }}</p>
                     </div>
                 </div>
 
@@ -82,7 +79,7 @@ function formatNumber(n: number): string {
 
             <div class="post-content">
                 <div class="post-message">
-                    {{ post.message }}
+                    {{ post.content }}
                 </div>
             </div>
 
@@ -117,12 +114,12 @@ function formatNumber(n: number): string {
                 </div>
 
                 <div class="post-date">
-                    {{ renderPostDate(post.time) }}
+                    {{ renderPostDate(post.createdAt) }}
                 </div>
             </div>
         </div>
 
-        <div class="post-replies" v-if="post.replies.length > 0">
+        <div class="post-replies" v-if="(post.replies !== undefined)">
             <div class="post-reply" v-for="reply in post.replies">
                 
                 <div class="post-reply-left">
@@ -429,6 +426,19 @@ div.post-replies {
                 display: flex;
                 flex-direction: row;
             }
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+    div.post {
+        width: 80vw;
+
+        div.post-footer {
+            flex-direction: column;
+            div.post-date {
+                align-self: end;
+            }           
         }
     }
 }

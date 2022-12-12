@@ -12,19 +12,25 @@ type Reply = {
     boosts: number;
 };
 
-class Post {
-    displayName: string = '';
-    username: string = '';
-    verified: boolean = false;
-    profilePicture: string = '';
-    message: string = '';
-    color: string = '';
-    time: Date = new Date();
-    replies: Array<Reply> = [];
-
-    likes: number = 0;
-    comments: number = 0;
-    boosts: number = 0;
+type User = {
+    id: number;
+    displayName: string;
+    username: string;
+    verified: boolean;
 };
 
-export { Post };
+type PostResponse = {
+    posts: Array<Post>;
+    users: Array<User>;
+};
+
+type Post = {
+    id: string;
+    content: string;
+    likes: number;
+    author: number;
+    replies?: Array<Post>;
+    createdAt: Date;
+}
+
+export type { PostResponse, User, Post };

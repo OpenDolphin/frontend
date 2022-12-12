@@ -181,6 +181,7 @@ header {
     display: flex;
     flex-direction: row;
     column-gap: 40px;
+    overflow: hidden;
 
     height: $contentHeight;
     line-height: $contentHeight;
@@ -207,5 +208,21 @@ header {
 
 div.router-view-container {
   margin: 20px;
+}
+
+@media screen and (max-width: 600px) {
+  header {
+
+    div.topbar--left {
+      width: 100%;
+      justify-content: space-between;
+      nav {
+        column-gap: 30px;
+      }
+    }
+    div.topbar--right {
+      display: none;
+    }
+  }
 }
 </style>

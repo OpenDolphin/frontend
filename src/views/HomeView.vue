@@ -1,88 +1,54 @@
 <script setup lang="ts">
 import PostVue from '@/components/Post.vue';
-import type { Post } from '@/types/post';
+import type { PostResponse, Post, User } from '@/types/post';
+import { onMounted, ref, watch } from 'vue';
+import type { Ref } from 'vue';
+import { useRoute } from 'vue-router';
 
-let posts = [
-    {
-      displayName: 'Pierre Doe',
-      username: 'pdoe',
-      color: '#689F38',
-      verified: true,
-      message: 'It\'s sunny outside!',
-      time: new Date(2022, 10, 8, 22, 33, 0, 0),
-      likes: 84,
-      comments: 33,
-      boosts: 7899,
-      replies: [
-        {
-          displayName: 'Billy Evans',
-          username: 'billy',
-          verified: true,
-          message: 'Very few companies on this planet manage a notable machine fleet that warrants an in-house compute team of software engineers building non-trivial systems and integrating it with the rest of their internal platform. Cloud has really changed the game for most large software shops.',
-          time: new Date(2022, 10, 8, 23, 33, 0, 0),
-          color: '#EF6C00',
-          likes: 43423,
-          comments: 1234,
-          boosts: 3332,
-        },
-        {
-          displayName: 'Suzanne White 🔋⚡️',
-          username: 'suzannew',
-          verified: false,
-          message: 'I have the feelings that many software hide their lack of substance using “magic” terms like “AI”. As a result, as I read that some software uses AI I tend to get really suspicious...',
-          time: new Date(2022, 10, 8, 23, 48, 0, 0),
-          color: '#546E7A',
-          likes: 55,
-          comments: 12,
-          boosts: 3,
-        }
-      ],
-    },
-    {
-      displayName: 'Pierre Doe',
-      username: 'pdoe',
-      verified: false,
-      message: 'Lorem Ipsum',
-      color: '#FF9800',
-      time: new Date(2020, 5, 1, 12, 33, 0, 0),
-      replies: [],
-      likes: 1,
-      comments: 2,
-      boosts: 3,
-    },
-    {
-      displayName: 'Pierre Doe',
-      username: 'pdoe',
-      verified: false,
-      message: 'Lorem Ipsum',
-      color: '#689F38',
-      time: new Date(2022, 5, 1, 12, 33, 0, 0),
-      replies: [],
-      likes: 4,
-      comments: 5,
-      boosts: 6,
-    },
-    {
-      displayName: 'Pierre Doe',
-      username: 'pdoe',
-      verified: true,
-      message: 'Lorem Ipsum',
-      color: '#AD1457',
-      time: new Date(2022, 5, 1, 12, 33, 0, 0),
-      replies: [],
-      likes: 7,
-      comments: 8,
-      boosts: 9,
-    },
-] as Array<Post>;
+const route = useRoute();
+const config = window._config;
+
+let postsResponse : Ref<PostResponse> = ref({posts: [], users: []});
+let users : Map<Number, User> = new Map();
+
+onMounted(async ()=>{
+  await loadContent();
+})
+
+async function loadContent(){
+  let req = new Request(`${config.backendUrl}/api/v1/posts`);
+  let res = await fetch(req);
+  if(res.status != 200 ){
+    console.error(`Unable to fetch posts: ${res.status}`);
+    return
+  }
+  let response: PostResponse = await res.json();
+
+  for(let user of response.users) {
+    console.log(user);
+    users.set(user.id, user);
+  }
+  postsResponse.value = response
+}
+
+function findUser(id: number): User {
+  let u = users.get(id);
+  console.log(u);
+  return u as User;
+}
+
+watch(route, async (a,b)=>{
+  await loadContent();
+});
 </script>
 
 <template>
   <main>
     <div class="posts">
-      <Post 
-        v-for="post in posts" 
+      <PostVue 
+        v-for="post in postsResponse.posts" 
         :post="post"
+        :author="findUser(post.author)"
         />
     </div>
   </main>
