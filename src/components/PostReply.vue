@@ -44,7 +44,7 @@ defineProps<{
                 </div>
             </div>
             <div class="post-content">
-                {{ author.message }}
+                {{ post.content }}
             </div>
             <div class="post-reply-footer">
                 <div class="post-actions">
