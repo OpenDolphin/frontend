@@ -24,13 +24,13 @@ defineProps<{
         <div class="post-reply-left">
             <ProfilePicture :size="50" 
                 :src="`${config.backendUrl}/api/v1/users/@${author.username}/profile_picture`"
-                :onClick="viewProfile(router, author.username)" class="author-profile-picture"
+                @click.stop="viewProfile(router, author.username)" class="author-profile-picture"
                 shape="circle" 
             />
         </div>
 
         <div class="post-reply-content">
-            <div class="user-info" :onClick="viewProfile(router, author.username)">
+            <div class="user-info" @click.stop="viewProfile(router, author.username)">
                 <div class="user-info--display-name">
                     {{ author.displayName }}
                 </div>
