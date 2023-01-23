@@ -11,9 +11,7 @@ export function renderPostDate(date: string): string {
 }
 
 export function viewProfile(router: Router, username: string) {
-    return ()=>{
-        router.push(`/profile/${username}`)
-    }
+    router.push(`/profile/${username}`)
 }
 
 export function formatNumber(n: number): string {

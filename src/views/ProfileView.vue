@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import ButtonVue from '@/components/Button.vue';
+import PostVue from '@/components/Post.vue';
+import type { Post } from '@/types/post';
 import { CircleCheckFilled } from '@element-plus/icons-vue';
 import { ElIcon } from 'element-plus';
 import { onMounted, ref, type Ref } from 'vue';
@@ -20,9 +22,9 @@ interface User {
 
 
 const user: Ref<User | null> = ref(null);
-const bannerPic = 'https://images.unsplash.com/photo-1570201731886-7f21202470b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1504&q=8';
+const posts: Ref<Array<Post> | null> = ref(null);
 
-onMounted(async ()=>{
+const getUser = async ()=>{
   let req = new Request(`${config.backendUrl}/api/v1/users/@${username}`);
   try {
     let res = await fetch(req);
@@ -36,6 +38,27 @@ onMounted(async ()=>{
   } catch(e) {
     console.error(`Unable to fetch profile @${username}`, e);
   }
+}
+
+const getUserPosts = async ()=>{
+  let req = new Request(`${config.backendUrl}/api/v1/users/@${username}/posts`);
+  try {
+    let res = await fetch(req);
+    if(res.status != 200) {
+      console.error(`Invalid status code received: ${res.status}`);
+      console.error(`Body = ${res.body}`)
+      return
+    }
+
+    posts.value = await res.json() as Array<Post>;
+  } catch(e) {
+    console.error(`Unable to fetch profile @${username}`, e);
+  }
+}
+
+onMounted(async ()=>{
+  getUser()
+  getUserPosts()
 });
 
 </script>
@@ -45,7 +68,7 @@ onMounted(async ()=>{
     <div class="user-profile" v-if="user != null">
       <div class="top-banner">
         <img 
-          :src="bannerPic"
+          :src="`${config.backendUrl}/api/v1/users/@${user.username}/bio_picture`"
           class="top-banner"
         />
       </div>
@@ -85,6 +108,12 @@ onMounted(async ()=>{
           {{ user.biography }}
         </div>
       </div>
+    </div>
+
+    <div class="posts" v-if="posts != null && user != null">
+      <PostVue v-for="post in posts" :post="post" :author="user">
+
+      </PostVue>
     </div>
   </main>
 </template>
@@ -183,6 +212,10 @@ div.user-profile {
       font-size: 16px;
       margin-top: 10px;
     }
+}
+
+div.posts {
+  margin-top: 2em;
 }
 
 @media screen and (max-width: 800px){

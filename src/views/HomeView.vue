@@ -66,7 +66,7 @@ div.posts {
   row-gap: 20px;
   margin-left: auto;
   margin-right: auto;
-  width: 80vw;
+  max-width: 600px;
   min-height: 50px;
 }
 </style>

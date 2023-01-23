@@ -15,11 +15,15 @@ defineProps<{
     author: User
 }>()
 
+const viewPost = (postId: string) => {
+    router.push(`/posts/${postId}`)
+}
+
 </script>
 
 <template>
     <div class="post-group">
-        <div class="post">
+        <div class="post" @click.stop="()=>viewPost(post.id)">
             <div class="post-top">
                 <div class="author">
                     <ProfilePicture
@@ -28,10 +32,10 @@ defineProps<{
                         fit="cover"
                         class="author-profile-picture"
                         :src="`${config.backendUrl}/api/v1/users/@${author.username}/profile_picture`"
-                        :onClick="viewProfile(router, author.username)"
+                        @click.stop="()=>viewProfile(router, author.username)"
                     />
 
-                    <div class="author-info" :onClick="viewProfile(router, author.username)">
+                    <div class="author-info" @click.stop="viewProfile(router, author.username)">
                         <div class="name-surname-verified">
                             <div class="name-surname">
                                 {{ author.displayName }}
@@ -53,7 +57,7 @@ defineProps<{
                 </div>
             </div>
 
-            <div class="post-content">
+            <div class="post-content" @click.stop="">
                 <div class="post-message">
                     {{ post.content }}
                 </div>
@@ -170,6 +174,10 @@ div.post-actions {
     }
 }
 
+div.post-group {
+    width: 100%;
+}
+
 div.post {
     display: flex;
     flex-direction: column;
@@ -178,12 +186,8 @@ div.post {
 
     border-radius: $postBorderRadius;
     padding: $postPadding;
-
-    width: 600px;
-
+    width: 100%;
     min-height: 100px;
-    margin: 0px 10px 0px 10px;
-
 
     div.post-top {
         display: flex;
