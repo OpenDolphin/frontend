@@ -1,4 +1,11 @@
-type Reply = {
+export type User = {
+    id: number;
+    displayName: string;
+    username: string;
+    verified: boolean;
+};
+
+export type Reply = {
     displayName: string,
     username: string,
     verified: boolean,
@@ -12,19 +19,12 @@ type Reply = {
     boosts: number;
 };
 
-type User = {
-    id: number;
-    displayName: string;
-    username: string;
-    verified: boolean;
-};
-
-type PostResponse = {
+export type PostResponse = {
     posts: Array<Post>;
     users: Array<User>;
 };
 
-type Post = {
+export type Post = {
     id: string;
     content: string;
     
@@ -37,5 +37,3 @@ type Post = {
     replies?: Array<Post>;
     createdAt: string;
 }
-
-export type { PostResponse, User, Post };

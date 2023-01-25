@@ -3,46 +3,72 @@ import type ProfilePicture from './ProfilePicture.vue';
 
 import { faHeart, faComments } from '@fortawesome/free-regular-svg-icons';
 import { faRetweet } from '@fortawesome/free-solid-svg-icons';
-import type { Post, User } from '@/types/post';
+import type { Post, User } from '@/types/models';
 import router from '@/router';
 
 import { viewProfile, formatNumber, renderPostDate } from '@/utils/postUtils';
-
+import { ref, type Ref } from 'vue';
+import UserCard from './UserCard.vue';
 
 const config = window._config;
-defineProps<{
+const props = defineProps<{
     post: Post
     author: User
 }>()
 
+const { post, author } = props;
+let likedBy: Ref<Array<User>> = ref([]);
+let likesLoading = ref(true);
+
+let dialogTableVisible = ref(false);
 const viewPost = (postId: string) => {
     router.push(`/posts/${postId}`)
+}
+
+const showLikes = async () => {
+    likesLoading.value = true
+    dialogTableVisible.value = !dialogTableVisible.value
+
+    try {
+        // Load likes
+        let req = new Request(`${window._config.backendUrl}/api/v1/posts/${post.id}/liked_by`)
+        let res = await fetch(req);
+        if(res.status != 200) {
+            console.log(`Invalid status code ${res.status} received`);
+            return
+        }
+        let json = await res.json();
+        likedBy.value = json as Array<User>;
+        likesLoading.value = false;
+    } catch(e) {
+        console.error(`Unable to load likes: ${e}`)
+    }
 }
 
 </script>
 
 <template>
     <div class="post-group">
-        <div class="post" @click.stop="()=>viewPost(post.id)">
+        <el-dialog v-model="dialogTableVisible" title="Liked by" class="likes-dialog" width="400">
+            <div class="dialog-content" v-loading="likesLoading">
+                <div class="user-likes" v-if="!likesLoading" v-loading="likesLoading">
+                    <UserCard :user="user" v-for="user in likedBy"/>
+                </div>
+            </div>
+        </el-dialog>
+        <div class="post" @click.stop="() => viewPost(post.id)">
             <div class="post-top">
                 <div class="author">
-                    <ProfilePicture
-                        :size="48"
-                        shape="circle"
-                        fit="cover"
-                        class="author-profile-picture"
+                    <ProfilePicture :size="48" shape="circle" fit="cover" class="author-profile-picture"
                         :src="`${config.backendUrl}/api/v1/users/@${author.username}/profile_picture`"
-                        @click.stop="()=>viewProfile(router, author.username)"
-                    />
+                        @click.stop="() => viewProfile(router, author.username)" />
 
                     <div class="author-info" @click.stop="viewProfile(router, author.username)">
                         <div class="name-surname-verified">
                             <div class="name-surname">
                                 {{ author.displayName }}
                             </div>
-                            <el-icon 
-                                class="verified-badge"
-                                v-if="author.verified">
+                            <el-icon class="verified-badge" v-if="author.verified">
                                 <CircleCheckFilled />
                             </el-icon>
                         </div>
@@ -67,16 +93,16 @@ const viewPost = (postId: string) => {
                 <div class="post-actions">
                     <div class="post-action">
                         <div class="post-action-icon like-button">
-                            <font-awesome-icon :icon="faHeart"/>
+                            <font-awesome-icon :icon="faHeart" />
                         </div>
-                        <div class="post-action-count">
+                        <div class="post-action-count clickable" @click.stop="showLikes">
                             {{ formatNumber(post.likes) }}
                         </div>
                     </div>
 
                     <div class="post-action">
                         <div class="post-action-icon reply-button">
-                            <font-awesome-icon :icon="faComments"/>
+                            <font-awesome-icon :icon="faComments" />
                         </div>
                         <div class="post-action-count">
                             {{ formatNumber(post.comments) }}
@@ -85,7 +111,7 @@ const viewPost = (postId: string) => {
 
                     <div class="post-action">
                         <div class="post-action-icon boost-button">
-                            <font-awesome-icon :icon="faRetweet"/>
+                            <font-awesome-icon :icon="faRetweet" />
                         </div>
                         <div class="post-action-count">
                             {{ formatNumber(post.boosts) }}
@@ -117,6 +143,16 @@ $postPadding: 20px;
     cursor: pointer;
 }
 
+div.likes-dialog {
+    div.dialog-content {
+        div.user-likes {
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+        }
+    }
+}
+
 div.post-actions {
     display: flex;
     flex-direction: row;
@@ -128,6 +164,7 @@ div.post-actions {
         display: flex;
         align-items: center;
         column-gap: 4px;
+        user-select: none;
 
         div.post-action-icon {
             $iconSize: 32px;
@@ -170,6 +207,10 @@ div.post-actions {
 
         div.post-action-count {
             text-align: left;
+
+            &.clickable {
+                cursor: pointer;
+            }
         }
     }
 }
@@ -198,6 +239,7 @@ div.post {
 
     div.post-content {
         margin-top: 1rem;
+
         div.post-message {
             font-size: 16px;
             font-weight: 400;
@@ -241,7 +283,7 @@ div.post {
             }
         }
     }
-    
+
     div.post-footer {
         display: flex;
         flex-direction: row;
@@ -281,9 +323,10 @@ div.post-replies {
 
         div.post-footer {
             flex-direction: column;
+
             div.post-date {
                 align-self: end;
-            }           
+            }
         }
     }
 }

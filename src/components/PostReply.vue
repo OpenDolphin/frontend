@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Post, User } from '@/types/post';
+import type { Post, User } from '@/types/models';
 import { viewProfile, formatNumber, renderPostDate } from '@/utils/postUtils';
 import { CircleCheckFilled } from '@element-plus/icons-vue';
 import { faHeart, faComments } from '@fortawesome/free-regular-svg-icons';

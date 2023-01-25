@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import PostVue from '@/components/Post.vue';
-import type { Post, PostResponse, User } from '@/types/post';
-import { numberLiteralTypeAnnotation } from '@babel/types';
+import type { Post, PostResponse, User } from '@/types/models';
 import { onMounted, ref, watch, type Ref } from 'vue';
 import { useRoute } from 'vue-router';
 const route = useRoute();

@@ -5,6 +5,8 @@ import type { Ref } from 'vue';
 import ProfilePicture from './components/ProfilePicture.vue';
 import { BellFilled, Calendar, MessageBox, Opportunity, Search, TrendCharts, type HomeFilled } from '@element-plus/icons-vue';
 import { ElIcon, ElBadge } from 'element-plus';
+import type { Alert } from '@/types/alert';
+
 const state = reactive({
   imageUrl: '/placeholders/avatar-1.jpg',
   name: 'Pierre',

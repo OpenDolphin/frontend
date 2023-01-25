@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ButtonVue from '@/components/Button.vue';
 import PostVue from '@/components/Post.vue';
-import type { Post } from '@/types/post';
+import type { Post } from '@/types/models';
 import { CircleCheckFilled } from '@element-plus/icons-vue';
 import { ElIcon } from 'element-plus';
 import { onMounted, ref, type Ref } from 'vue';

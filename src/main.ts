@@ -1,4 +1,4 @@
-import { createApp, ref } from 'vue'
+import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
 import App from './App.vue'
@@ -8,10 +8,11 @@ import './assets/main.css'
 import ElementPlus from 'element-plus';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import type { Ref } from 'vue';
+import 'element-plus/theme-chalk/dark/css-vars.css'
 
 import "@fontsource/open-sans/variable.css"
 import type { Config } from './types/config'
+import type { Alert } from './types/alert';
 import { useDark, useToggle } from '@vueuse/core'
 
 const isDark = useDark()

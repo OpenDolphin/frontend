@@ -9,8 +9,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Alert: typeof import('./src/components/Alert.vue')['default']
     Button: typeof import('./src/components/Button.vue')['default']
-    ElAlert: typeof import('element-plus/es')['ElAlert']
-    ElBadge: typeof import('element-plus/es')['ElBadge']
+    ElDialog: typeof import('element-plus/es')['ElDialog']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
     IconDocumentation: typeof import('./src/components/icons/IconDocumentation.vue')['default']
@@ -22,5 +21,9 @@ declare module '@vue/runtime-core' {
     ProfilePicture: typeof import('./src/components/ProfilePicture.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    UserCard: typeof import('./src/components/UserCard.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }
