@@ -25,6 +25,10 @@
 
 /* semantic color variables for this project */
 :root {
+
+  /* Rouding */
+  --round-radius: 3px;
+
   /* Main Colors */
   --color-primary: #7C44F5;
   --color-secondary: #9D73F7;
@@ -56,6 +60,10 @@
   --color-boost-background: #caffca;
 
   --color-verified: #925fe9;
+
+  --alert-text-color: var(--color-white-soft);
+  --color-danger: #E57373;
+  --color-danger-border: #c26060;
 
 
 
@@ -99,6 +107,11 @@
     --color-comment-background: #0a1e33;
     --color-boost: #11bb11;
     --color-boost-background: #0c290c;
+
+    --color-danger: #972020;
+    --color-danger-border: #C62828;
+    --alert-text-color: #d6d6d6;
+
 
     --color-text-soft: #6f6f6f;
   }

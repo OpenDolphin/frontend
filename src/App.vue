@@ -1,12 +1,23 @@
 <script lang="ts" setup>
 import { RouterLink, RouterView } from 'vue-router'
-import { reactive, toRefs } from 'vue';
+import { reactive, ref, toRefs } from 'vue';
+import type { Ref } from 'vue';
 import ProfilePicture from './components/ProfilePicture.vue';
-import { Opportunity, type HomeFilled } from '@element-plus/icons-vue';
+import { BellFilled, Calendar, MessageBox, Opportunity, Search, TrendCharts, type HomeFilled } from '@element-plus/icons-vue';
+import { ElIcon, ElBadge } from 'element-plus';
 const state = reactive({
   imageUrl: '/placeholders/avatar-1.jpg',
   name: 'Pierre',
 });
+
+let alerts: Ref<Array<Alert>> = ref(window._alerts);
+
+const addAlert = ()=>{
+  alerts.value.push({
+    title: 'OK',
+    description: 'test',
+  })
+};
 
 const { imageUrl, name } = toRefs(state);
 </script>
@@ -79,6 +90,12 @@ const { imageUrl, name } = toRefs(state);
 
   <div class="router-view-container">
     <RouterView />
+  </div>
+
+  <div id="toast-container">
+    <div class="toasts">
+      <Alert :title="alert.title" :description="alert.description" v-for="alert in alerts"/>
+    </div>
   </div>
 </template>
 
@@ -208,6 +225,24 @@ header {
 
 div.router-view-container {
   margin: 20px;
+}
+
+div#toast-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+
+  div.toasts {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    max-width: 500px;
+    width: 80vw;
+  }
 }
 
 @media screen and (max-width: 600px) {
