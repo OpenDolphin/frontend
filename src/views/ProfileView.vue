@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import ButtonVue from '@/components/Button.vue';
 import PostVue from '@/components/Post.vue';
+import router from '@/router';
 import type { Post } from '@/types/models';
 import { CircleCheckFilled } from '@element-plus/icons-vue';
 import { ElIcon } from 'element-plus';
-import { onMounted, ref, type Ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { onMounted, onUpdated, ref, watch, type Ref } from 'vue';
+import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 
 const config = window._config;
 const route = useRoute();
@@ -61,6 +62,13 @@ onMounted(async ()=>{
   getUserPosts()
 });
 
+watch(route, ()=>{
+  console.log("Something changed")
+  username = route.params.username
+  posts.value = [];
+  getUser()
+  getUserPosts()
+})
 </script>
 
 <template>

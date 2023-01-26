@@ -25,7 +25,6 @@ async function loadContent(){
   let response: PostResponse = await res.json();
 
   for(let user of response.users) {
-    console.log(user);
     users.set(user.id, user);
   }
   postsResponse.value = response
@@ -33,7 +32,6 @@ async function loadContent(){
 
 function findUser(id: number): User {
   let u = users.get(id);
-  console.log(u);
   return u as User;
 }
 
