@@ -62,10 +62,9 @@ onMounted(async ()=>{
   getUserPosts()
 });
 
-watch(route, ()=>{
-  console.log("Something changed")
-  username = route.params.username
-  posts.value = [];
+watch(route, (to, from) =>{
+  username = to.params.username
+  posts.value = null;
   getUser()
   getUserPosts()
 })
