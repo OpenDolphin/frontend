@@ -28,7 +28,9 @@ const { imageUrl, name } = toRefs(state);
   <header>
     <div class="topbar--left">
       <div class="logo">
-        <img src="/symbol.svg" class="logo"/>
+        <router-link to="/">
+          <img src="/symbol.svg" class="logo"/>
+        </router-link>
       </div>
 
       <nav>
